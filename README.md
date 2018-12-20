@@ -1,5 +1,6 @@
 # Readme
 Example of BNF specification based parser nearley JS. Minimalistic language to create simple math operations and functions.
+Before start it need to be build so write `npm run build` and then.
 
 To start app write `npm start` in cli.
 
