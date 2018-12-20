@@ -46,8 +46,13 @@ let context = {
             const [name,math=params] = exp.nodes;
             if(!Object.keys(context.functions).includes(name)) throw Error(`Function ${exp.nodes[0]} is not defined`);            
             const {body,params} = context.functions[name];
+            console.log("params", params);
             for(let i=0;i<params.length;i++){
-                context.variables[params[i].nodes[0]] = context.compute(math[i]);
+                if(!(math instanceof Array)){
+                    context.variables[params[i].nodes[0]] = context.compute(math);
+                } else {
+                    context.variables[params[i].nodes[0]] = context.compute(math[i]);
+                }
             }
             var res = context.compute(body);
             variables = savedVariables;
@@ -76,7 +81,10 @@ let context = {
         if(exp.nodes == undefined) {
             throw Error(`${JSON.stringify(exp, null , 2)} nodes is undefined`);
         }
-        return exp.nodes.map(node => context.compute(node)).reduce(context.operations[exp.type]);
+        return exp.nodes.filter(x => !!x).map(node => {
+            console.log("Compute node: ", node);
+            return context.compute(node);
+        }).reduce(context.operations[exp.type]);
     },
     evaluate: (expressions) => {
         context.outputs = [];

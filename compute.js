@@ -21,6 +21,7 @@ var operations = {
   };
   
   function compute(exp) {
+    console.log('EXP', exp);
     if(typeof exp === 'number') return exp;
     var fn;
     if (fn = operations[exp.type]) {

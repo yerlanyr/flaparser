@@ -23,6 +23,13 @@ describe('Report builder', function(){
         ]);
         expect(context.outputs).to.deep.equal(['Function',25]);
     });
+    it.only('should compute functions with one parameter', function(){
+        context.evaluate([
+            context.getAst('fun a(b)=>b*3'),
+            context.getAst('a(4)')
+        ]);
+        expect(context.outputs).to.deep.equal(['Function',12]);
+    });
     it('should throw when there is no variable declared', function(){
         expect(() => {
             context.evaluate([
